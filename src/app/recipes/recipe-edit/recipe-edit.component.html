@@ -1,0 +1,155 @@
+<div class="row">
+  <div class="col-sm-12">
+    <!-- No need to pass a local reference of the form in onSubmit() because
+      we are not using Angular's auto-creation mechanism. We created the form programmatically
+      in the controller and so can access it there from the onSubmit method-->
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <button
+            type="submit"
+            class="btn btn-success me-2"
+            [disabled]="!recipeForm.valid"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger me-2"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              id="name"
+              class="form-control"
+              type="text"
+              formControlName="name"
+            />
+            <!-- <input
+              id="name"
+              class="form-control"
+              type="text"
+              Alternative syntax
+              [formControlName]="'name'"
+            /> -->
+            <small
+              *ngIf="
+                !recipeForm.get('name')?.valid &&
+                recipeForm.get('name')?.touched
+              "
+              class="help-block"
+              >Please enter a valid name</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="imagePath" class="form-label">Image URL</label>
+            <input
+              id="imagePath"
+              class="form-control"
+              type="text"
+              formControlName="imagePath"
+              #imagePath
+            />
+            <!-- <input
+              id="imagePath"
+              class="form-control"
+              type="text"
+              Alternative syntax
+              [formControlName]="'imagePath'"
+            /> -->
+            <small
+              *ngIf="
+                !recipeForm.get('imagePath')?.valid &&
+                recipeForm.get('imagePath')?.touched
+              "
+              class="help-block"
+              >Please enter a valid image URL</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <img [src]="imagePath.value" alt="" class="img-fluid" />
+        </div>
+      </div>
+
+      <!-- Description start -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              rows="6"
+              id="description"
+              class="form-control"
+              formControlName="description"
+            ></textarea>
+            <!-- <textarea
+              rows="6"
+              id="description"
+              class="form-control"
+              [formControlName]="'description'"
+            ></textarea> -->
+          </div>
+        </div>
+      </div>
+      <!-- Description end -->
+
+      <!-- Ingredients -->
+      <div class="row">
+        <div class="col-sm-12" formArrayName="ingredients">
+          <div
+            *ngFor="let ingredientControl of ingredientControls; let i = index"
+            [formGroupName]="i"
+            class="row mb-3"
+          >
+            <div class="col-sm-8">
+              <input formControlName="name" class="form-control" type="text" />
+            </div>
+            <div class="col-sm-2">
+              <input
+                formControlName="amount"
+                class="form-control"
+                type="number"
+              />
+            </div>
+            <div class="col-sm-2">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="onDeleteIngredient(i)"
+              >
+                x
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="onAddIngredient()"
+          >
+            Add Ingredient
+          </button>
+        </div>
+      </div>
+      <!-- Ingredients -->
+    </form>
+  </div>
+</div>

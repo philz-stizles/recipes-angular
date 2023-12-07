@@ -31,3 +31,17 @@ ng new %project-name% --no-standalone
 Style using bootstrap
 
 npm i bootstrap@5.3.2
+
+Add the path to the bootstrap relative to the "index.html", and before the ""
+
+"node_modules/bootstrap/dist/css/bootstrap.min.css"
+
+would be created in app by default, if no path is specified
+ng g c recipes --skip-tests
+
+ng g c recipes/recipe-list --skip-tests
+ng g c recipes/recipe-detail --skip-tests
+ng g c recipes/recipe-list/recipe-item --skip-tests
+
+ng g c recipes/shopping-list --skip-tests
+ng g c recipes/shopping-list/shopping-edit --skip-tests
