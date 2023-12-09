@@ -96,4 +96,8 @@ export class RecipeEditComponent implements OnInit {
       ingredients,
     });
   }
+
+  canDeactivate = () => {
+
+  };
 }

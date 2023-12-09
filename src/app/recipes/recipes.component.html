@@ -1,10 +1,10 @@
-<div class="row g-4">
-  <div class="col-md-5">
+<div class="row g-3">
+  <div class="col-5">
     <app-recipe-list
       (recipeSelected)="selectedRecipe = $event"
     ></app-recipe-list>
   </div>
-  <div class="col-md-7">
+  <div class="col-7">
     <router-outlet></router-outlet>
     <!-- <app-recipe-detail
       *ngIf="selectedRecipe; else noRecipe"

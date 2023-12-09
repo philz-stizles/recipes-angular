@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponse {
   kind: string;
@@ -20,14 +21,13 @@ export class AuthService {
   // https://firebase.google.com/docs/reference/rest/auth
   user = new BehaviorSubject<User | null>(null);
   tokenExpirationTimeout?: any;
-  baseUrl =
-    'https://identitytoolkit.googleapis.com/v1/accounts:{ENDPOINT}?key=[API_KEY]';
+  baseUrl = environment.baseUrl;
 
   constructor(private https: HttpClient, private router: Router) {}
 
   signup = (email: string, password: string) => {
     return this.https
-      .post<AuthResponse>(`${this.baseUrl.replace('{ENDPOINT}', 'signup')}`, {
+      .post<AuthResponse>(`${this.baseUrl.replace('{ENDPOINT}', 'signUp')}`, {
         // return the Observable since we are interested in monitoring the response in the AuthComponent
         // to display loading, error if any etc.
         email: email,
@@ -88,6 +88,7 @@ export class AuthService {
   };
 
   logout = () => {
+    console.log('logout')
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
@@ -115,7 +116,7 @@ export class AuthService {
   };
 
   private handleError = (error: HttpErrorResponse) => {
-    console.log(error);
+    console.log(error.error.error);
     let message = 'Something went wrong';
     if (!error || !error.error || !error.error.error) {
       return throwError(() => new Error(message));
@@ -125,9 +126,10 @@ export class AuthService {
       case 'EMAIL_EXISTS':
         message = 'This email is already taken';
         break;
+      case 'INVALID_LOGIN_CREDENTIALS':
       case 'EMAIL_NOT_FOUND':
       case 'INVALID_PASSWORD':
-        message = 'Invalid email or password';
+        message = 'Invalid Login Credentials';
         break;
       case 'USER_DISABLED':
         message = 'Invalid email or password';
