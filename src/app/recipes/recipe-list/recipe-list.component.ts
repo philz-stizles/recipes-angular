@@ -9,11 +9,13 @@ import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss',
+  animations: [trigger('', [])],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];

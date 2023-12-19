@@ -1,5 +1,14 @@
 {
+  "targets": {
+    "recipes123": {
+      "hosting": {
+        "recipes": [
+          "recipes123-5a6a7"
+        ]
+      }
+    }
+  },
   "projects": {
-    "default": "devdezyn-f8967"
+    "default": "recipes123"
   }
 }
